@@ -1,0 +1,184 @@
+{
+  "$schema": "https://unpkg.com/@camunda/zeebe-element-templates-json-schema/resources/schema.json",
+  "name": "RocketMQ Connector",
+  "id": "io.camunda.connectors.ROCKETMQ.v1",
+  "description": "Send message to topic",
+  "appliesTo": [
+    "bpmn:Task"
+  ],
+  "elementType": {
+    "value": "bpmn:ServiceTask"
+  },
+  "category": {
+    "id": "connectors",
+    "name": "Connectors"
+  },
+  "groups": [
+    {
+      "id": "authentication",
+      "label": "Authentication"
+    },
+    {
+      "id": "topicProperties",
+      "label": "Topic Properties"
+    },
+    {
+      "id": "input",
+      "label": "Input message data"
+    },
+    {
+      "id": "output",
+      "label": "Output"
+    },
+    {
+      "id": "errors",
+      "label": "Error Handling"
+    }
+  ],
+  "properties": [
+    {
+      "type": "Hidden",
+      "value": "io.camunda:rocket-mq:1",
+      "binding": {
+        "type": "zeebe:taskDefinition:type"
+      }
+    },
+    {
+      "label": "Access Key",
+      "group": "authentication",
+      "type": "String",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "authentication.accessKey"
+      },
+      "feel": "optional",
+      "optional": true
+    },
+    {
+      "label": "Secret Key",
+      "group": "authentication",
+      "type": "String",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "authentication.secretKey"
+      },
+      "feel": "optional",
+      "optional": true
+    },
+    {
+      "label": "Name Server",
+      "description": "The name server of RocketMQ",
+      "group": "topicProperties",
+      "type": "String",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "topic.namesrvAddr"
+      },
+      "feel": "optional",
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "Group Name",
+      "description": "The group name of this producer",
+      "group": "topicProperties",
+      "type": "String",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "topic.groupName"
+      },
+      "feel": "optional",
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "Topic",
+      "description": "The topic of the message to be sent",
+      "group": "topicProperties",
+      "type": "String",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "topic.topicName"
+      },
+      "feel": "optional",
+      "constraints": {
+        "notEmpty": true
+      }
+    },
+    {
+      "label": "Message body",
+      "description": "The storage content of the message",
+      "group": "input",
+      "type": "Text",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "message.body"
+      },
+      "constraints": {
+        "notEmpty": true
+      },
+      "feel": "optional"
+    },
+    {
+      "label": "Message tag",
+      "description": "Categorize the message",
+      "group": "input",
+      "type": "Text",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "message.tag"
+      },
+      "feel": "optional",
+      "optional": true
+    },
+    {
+      "label": "Message key",
+      "description": "The key is the business-specific attribute of the message",
+      "group": "input",
+      "type": "Text",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "message.key"
+      },
+      "feel": "optional",
+      "optional": true
+    },
+    {
+      "label": "Result Variable",
+      "description": "Name of variable to store the response in",
+      "group": "output",
+      "type": "String",
+      "binding": {
+        "type": "zeebe:taskHeader",
+        "key": "resultVariable"
+      }
+    },
+    {
+      "label": "Result Expression",
+      "description": "Expression to map the response into process variables",
+      "group": "output",
+      "type": "Text",
+      "feel": "required",
+      "binding": {
+        "type": "zeebe:taskHeader",
+        "key": "resultExpression"
+      }
+    },
+    {
+      "label": "Error Expression",
+      "description": "Expression to define BPMN Errors to throw",
+      "group": "errors",
+      "type": "Text",
+      "feel": "required",
+      "binding": {
+        "type": "zeebe:taskHeader",
+        "key": "errorExpression"
+      }
+    }
+  ],
+  "icon": {
+    "contents": "data:image/svg+xml;base64,PHN2ZyB4bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iIHhtbG5zOmNjPSJodHRwOi8vY3JlYXRpdmVjb21tb25zLm9yZy9ucyMiIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyIgeG1sbnM6c3ZnPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczpzb2RpcG9kaT0iaHR0cDovL3NvZGlwb2RpLnNvdXJjZWZvcmdlLm5ldC9EVEQvc29kaXBvZGktMC5kdGQiIHhtbG5zOmlua3NjYXBlPSJodHRwOi8vd3d3Lmlua3NjYXBlLm9yZy9uYW1lc3BhY2VzL2lua3NjYXBlIiB3aWR0aD0iMzYuNzM2MjgybW0iIGhlaWdodD0iNTAuNjE4NjcxbW0iIHZpZXdCb3g9IjAgMCAzNi43MzYyODIgNTAuNjE4NjcxIiB2ZXJzaW9uPSIxLjEiIGlkPSJzdmc4OTMiIGlua3NjYXBlOnZlcnNpb249IjAuOTIuMyAoMjQwNTU0NiwgMjAxOC0wMy0xMSkiIHNvZGlwb2RpOmRvY25hbWU9InJvY2tldG1xLnN2ZyI+CiAgPGRlZnMgaWQ9ImRlZnM4ODciLz4KICA8c29kaXBvZGk6bmFtZWR2aWV3IGlkPSJiYXNlIiBwYWdlY29sb3I9IiNmZmZmZmYiIGJvcmRlcmNvbG9yPSIjNjY2NjY2IiBib3JkZXJvcGFjaXR5PSIxLjAiIGlua3NjYXBlOnBhZ2VvcGFjaXR5PSIwLjAiIGlua3NjYXBlOnBhZ2VzaGFkb3c9IjIiIGlua3NjYXBlOnpvb209IjEuOTc5ODk5IiBpbmtzY2FwZTpjeD0iLTY1Ljg4NDI5NyIgaW5rc2NhcGU6Y3k9IjQxLjY2MzQyNSIgaW5rc2NhcGU6ZG9jdW1lbnQtdW5pdHM9Im1tIiBpbmtzY2FwZTpjdXJyZW50LWxheWVyPSJsYXllcjEiIHNob3dncmlkPSJmYWxzZSIgZml0LW1hcmdpbi10b3A9IjAiIGZpdC1tYXJnaW4tbGVmdD0iMCIgZml0LW1hcmdpbi1yaWdodD0iMCIgZml0LW1hcmdpbi1ib3R0b209IjAiIGlua3NjYXBlOndpbmRvdy13aWR0aD0iMzcyNiIgaW5rc2NhcGU6d2luZG93LWhlaWdodD0iMjA0OSIgaW5rc2NhcGU6d2luZG93LXg9IjExNCIgaW5rc2NhcGU6d2luZG93LXk9IjU1IiBpbmtzY2FwZTp3aW5kb3ctbWF4aW1pemVkPSIxIi8+CiAgPHRpdGxlPkFwYWNoZSBSb2NrZXRNUSBsb2dvPC90aXRsZT4KICA8bWV0YWRhdGE+CiAgICA8cmRmOlJERj4KICAgICAgPGNjOldvcmsgcmRmOmFib3V0PSIiPgogICAgICAgIDxkYzpmb3JtYXQ+aW1hZ2Uvc3ZnK3htbDwvZGM6Zm9ybWF0PgogICAgICAgIDxkYzp0eXBlIHJkZjpyZXNvdXJjZT0iaHR0cDovL3B1cmwub3JnL2RjL2RjbWl0eXBlL1N0aWxsSW1hZ2UiLz4KICAgICAgICA8ZGM6dGl0bGUvPgogICAgICA8L2NjOldvcms+CiAgICA8L3JkZjpSREY+CiAgPC9tZXRhZGF0YT4KICA8ZyBpbmtzY2FwZTpsYWJlbD0iTGF5ZXIgMSIgaW5rc2NhcGU6Z3JvdXBtb2RlPSJsYXllciIgaWQ9ImxheWVyMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTE1LjA0NjE0NSwtMTEzLjAxNzg3KSI+CiAgICA8cGF0aCBzdHlsZT0iZmlsbDojZmQ2NTAwO2ZpbGwtb3BhY2l0eToxO3N0cm9rZS13aWR0aDowLjI2NDU4MzM1IiBkPSJtIDMyLjIyOTYxOCwxNjIuNTExODUgYyAtMS4wODk1NTgsLTEuMzQ0NzkgLTIuMzMxODYsLTMuOTg1NDggLTIuNTY3MTM3LC01LjQ1NjgyIGwgLTAuMTcyMzcyLC0xLjA3Nzk2IGggMy44NzAyNzMgYyAzLjAyNzA2OSwwIDMuODcwMjc1LDAuMDc2IDMuODcwMjc1LDAuMzQ4ODUgMCwwLjc0MTQ3IC0wLjg2OTQ0NywzLjI3NTczIC0xLjQ5NTEzNCw0LjM1ODAyIC0wLjcwMzAyNywxLjIxNjA2IC0yLjE1MzUzNCwyLjk3NDg1IC0yLjQzNDg3OCwyLjk1MjM5IC0wLjA5NDA3LC0wLjAwOCAtMC41NzYwMjgsLTAuNTEzNTMgLTEuMDcxMDI3LC0xLjEyNDQ4IHogbSAtOS41NTgzNTEsLTguODQyMjEgYyAtMi42MzgzNTMsLTYuMzM3NjEgLTIuNTk2NjQ2LC0xNC4zMDg1NSAwLjExNzMwNiwtMjIuNDE5MDggMS42NTg0NzEsLTQuOTU2MjcgNS41OTIyODMsLTExLjk5OTQ3IDkuMzA2NzE2LC0xNi42NjI5OSBsIDEuMjUwMjQ4LC0xLjU2OTcgMC44ODk1OTIsMS4wNDA1NCBjIDEuNjA5OTY5LDEuODgzMTMgNS41MDg0OTgsNy44Njk0MyA2LjkxNjgzMywxMC42MjA5OCAyLjc4MzQ2Miw1LjQzODIyIDQuMzMzMDc0LDEwLjUzMDI5IDQuNzczOTIyLDE1LjY4NzI2IDAuNDE1MDI4LDQuODU0OTMgLTAuMzcyMDgzLDEwLjIwMDg3IC0yLjAyODY2MSwxMy43NzgzOSBsIC0wLjcxMzQ0MSwxLjU0MDczIC0xLjUzMzE3LC0wLjkxMjY4IC0xLjUzMzE3MSwtMC45MTI2OSBoIC02LjgwODQ3OCBjIC01LjIwMDg4OSwwIC02LjkzMTcwNywwLjA4MjUgLTcuMzMwMzcyLDAuMzQ5MzkgLTAuMjg3MDQxLDAuMTkyMTcgLTAuOTU2MzI1LDAuNjExMTUgLTEuNDg3Mjk3LDAuOTMxMDcgbCAtMC45NjU0MDUsMC41ODE2OCB6IG0gMTkuNjkzODMxLC0zLjc3NjU2IGMgMS42NDI4MTksLTUuNTMxOTcgMS4xMjI4ODEsLTEzLjE4OTI1IC0xLjMzODIwNywtMTkuNzA4MTcgLTEuNDQxMTY0LC0zLjgxNzM2IC00LjM5NzYzNCwtOS4xMDg5NyAtNi43NzI0MjEsLTEyLjEyMTU3IC0wLjc1MjIyMywtMC45NTQyNiAtMC44MTYzMDYsLTAuOTgyMSAtMS4yODQ2NTEsLTAuNTU4MjYgLTAuOTI5NTk4LDAuODQxMjggLTMuOTEwNDg3LDUuNTMxOTggLTUuMzY0NjUxLDguNDQxNzggLTQuMDY0NjgsOC4xMzM0NiAtNS4yMzg0NzIsMTYuODYyOTYgLTMuMjA3MDQ2LDIzLjg1MDgyIGwgMC40MTE5LDEuNDE2ODkgaCA4LjU4MTMxNyA4LjU4MTMxOCB6IG0gLTI3LjI3NDgyLDQuOTU5NTEgYyAwLjA3ODA5LC0wLjMyNzQyIDAuMjI3NDQxLC0xLjE5MDYzIDAuMzMxODg1LC0xLjkxODIzIDAuMTY2MjUyLC0xLjE1ODE5IDAuMzk4NjQ3LC0xLjUzNzA2IDEuODY2MzY2LC0zLjA0MjcxIGwgMS42NzY0NjgsLTEuNzE5NzkgMC4wMDQ3LDEuMDY4ODkgYyAwLjAwNiwxLjM1Mjc2IDAuNjM2MzM1LDMuNzkzNzggMS4zMzE3MzgsNS4xNTY4OSBsIDAuNTM1ODA2LDEuMDUwMjYgaCAtMi45NDQ0NzcgYyAtMi45MTkyMTQsMCAtMi45NDMyNTksLTAuMDA1IC0yLjgwMjQ5LC0wLjU5NTMxIHogbSAzMS41MTQ0MjcsLTAuNzkzNzUgYyAwLjU3MTExMSwtMS4yOTI3MiAxLjExNTk0NiwtMy40MDg1MyAxLjI3NzQ3NywtNC45NjA5NCAwLjA2NTY0LC0wLjYzMDgzIDAuMTQwMDQ2LC0wLjU5MzgyIDEuNjA2OTgxLDAuNzk5MTYgMS40NjgwMTIsMS4zOTQwMSAxLjU1NTM2OSwxLjU1MDg3IDEuOTE1NTU3LDMuNDM5NTkgMC4yMDc1NjgsMS4wODg0MiAwLjM3NzUzNywyLjAwODczIDAuMzc3NzA5LDIuMDQ1MTEgMS43MmUtNCwwLjAzNjQgLTEuMzAyODI1LDAuMDY2MSAtMi44OTU1NDUsMC4wNjYxIGggLTIuODk1ODU3IHoiIGlkPSJwYXRoMTQ1MiIgaW5rc2NhcGU6Y29ubmVjdG9yLWN1cnZhdHVyZT0iMCIgc29kaXBvZGk6bm9kZXR5cGVzPSJjc2Nzc2NjY3Nzc2Njc3NjY2Njc2NjY3Nzc2Njc3NjY2NzY2NjY2NjY3NjY2NjY3Njc2NjIi8+CiAgICA8Y2lyY2xlIHN0eWxlPSJvcGFjaXR5OjE7ZmlsbDpub25lO2ZpbGwtb3BhY2l0eToxO3N0cm9rZTojZmQ2NTAwO3N0cm9rZS13aWR0aDoxO3N0cm9rZS1saW5lY2FwOnJvdW5kO3N0cm9rZS1saW5lam9pbjpyb3VuZDtzdHJva2UtbWl0ZXJsaW1pdDo0O3N0cm9rZS1kYXNoYXJyYXk6bm9uZTtzdHJva2Utb3BhY2l0eToxIiBpZD0icGF0aDE0NTQiIGN4PSIzMi45NDYzNDIiIGN5PSIxMzkuOTg0NTMiIHI9IjQuMDc1ODYiLz4KICAgIDxjaXJjbGUgc3R5bGU9Im9wYWNpdHk6MTtmaWxsOiNmZDY1MDA7ZmlsbC1vcGFjaXR5OjE7c3Ryb2tlOm5vbmU7c3Ryb2tlLXdpZHRoOjEuMjk2ODc1O3N0cm9rZS1saW5lY2FwOnJvdW5kO3N0cm9rZS1saW5lam9pbjpyb3VuZDtzdHJva2UtbWl0ZXJsaW1pdDo0O3N0cm9rZS1kYXNoYXJyYXk6bm9uZTtzdHJva2Utb3BhY2l0eToxIiBpZD0icGF0aDE0NTYiIGN4PSIyOC4wNDY1OTUiIGN5PSIxMzQuMzQ5NzgiIHI9IjEuMzg2NDYwNyIvPgogICAgPGNpcmNsZSBzdHlsZT0ib3BhY2l0eToxO2ZpbGw6I2ZkNjUwMDtmaWxsLW9wYWNpdHk6MTtzdHJva2U6bm9uZTtzdHJva2Utd2lkdGg6MS41NzgxMjUxMjtzdHJva2UtbGluZWNhcDpyb3VuZDtzdHJva2UtbGluZWpvaW46cm91bmQ7c3Ryb2tlLW1pdGVybGltaXQ6NDtzdHJva2UtZGFzaGFycmF5Om5vbmU7c3Ryb2tlLW9wYWNpdHk6MSIgaWQ9InBhdGgxNDU2LTMiIGN4PSIyNy4yOTQ5MDEiIGN5PSIxNDQuNDg5MzIiIHI9IjEuNjg3MTM4OSIvPgogICAgPGNpcmNsZSBzdHlsZT0ib3BhY2l0eToxO2ZpbGw6I2ZkNjUwMDtmaWxsLW9wYWNpdHk6MTtzdHJva2U6bm9uZTtzdHJva2Utd2lkdGg6Mi4xMDkzNzUyNDtzdHJva2UtbGluZWNhcDpyb3VuZDtzdHJva2UtbGluZWpvaW46cm91bmQ7c3Ryb2tlLW1pdGVybGltaXQ6NDtzdHJva2UtZGFzaGFycmF5Om5vbmU7c3Ryb2tlLW9wYWNpdHk6MSIgaWQ9InBhdGgxNDU2LTMtNiIgY3g9IjM4LjI4NjM1OCIgY3k9IjEzNC4xMzI2MyIgcj0iMi4yNTUwODY3Ii8+CiAgICA8Y2lyY2xlIHN0eWxlPSJvcGFjaXR5OjE7ZmlsbDojZmQ2NTAwO2ZpbGwtb3BhY2l0eToxO3N0cm9rZTpub25lO3N0cm9rZS13aWR0aDoyLjc5Njg3NTI0O3N0cm9rZS1saW5lY2FwOnJvdW5kO3N0cm9rZS1saW5lam9pbjpyb3VuZDtzdHJva2UtbWl0ZXJsaW1pdDo0O3N0cm9rZS1kYXNoYXJyYXk6bm9uZTtzdHJva2Utb3BhY2l0eToxIiBpZD0icGF0aDE0NTYtMy03IiBjeD0iMzguMjg2MzU4IiBjeT0iMTQ2Ljk5NDk2IiByPSIyLjk5MDA3NzciLz4KICAgIDxyZWN0IHN0eWxlPSJvcGFjaXR5OjE7ZmlsbDojZmQ2NTAwO2ZpbGwtb3BhY2l0eToxO3N0cm9rZTpub25lO3N0cm9rZS13aWR0aDoxLjExMzU1MjkzO3N0cm9rZS1saW5lY2FwOnJvdW5kO3N0cm9rZS1saW5lam9pbjpyb3VuZDtzdHJva2UtbWl0ZXJsaW1pdDo0O3N0cm9rZS1kYXNoYXJyYXk6bm9uZTtzdHJva2Utb3BhY2l0eToxIiBpZD0icmVjdDE0OTQiIHdpZHRoPSIxLjQ2NDY1NzgiIGhlaWdodD0iMi4xNzMzNjMyIiB4PSItNzYuMDIyNTA3IiB5PSIxMTUuNjYzNyIgdHJhbnNmb3JtPSJyb3RhdGUoLTQ1KSIvPgogICAgPHJlY3Qgc3R5bGU9Im9wYWNpdHk6MTtmaWxsOiNmZDY1MDA7ZmlsbC1vcGFjaXR5OjE7c3Ryb2tlOm5vbmU7c3Ryb2tlLXdpZHRoOjEuMTY2MTkwMzk7c3Ryb2tlLWxpbmVjYXA6cm91bmQ7c3Ryb2tlLWxpbmVqb2luOnJvdW5kO3N0cm9rZS1taXRlcmxpbWl0OjQ7c3Ryb2tlLWRhc2hhcnJheTpub25lO3N0cm9rZS1vcGFjaXR5OjEiIGlkPSJyZWN0MTQ5NC01IiB3aWR0aD0iMS42MDYzOTg4IiBoZWlnaHQ9IjIuMTczMzYzMiIgeD0iMTIxLjIyNTczIiB5PSI2OS40NTk0NSIgdHJhbnNmb3JtPSJyb3RhdGUoNDUpIiBpbmtzY2FwZTp0cmFuc2Zvcm0tY2VudGVyLXg9IjIuMjY3ODU3MSIgaW5rc2NhcGU6dHJhbnNmb3JtLWNlbnRlci15PSIxLjAzOTQzNDUiLz4KICAgIDxyZWN0IHN0eWxlPSJvcGFjaXR5OjE7ZmlsbDojZmQ2NTAwO2ZpbGwtb3BhY2l0eToxO3N0cm9rZTpub25lO3N0cm9rZS13aWR0aDoxLjExMzU1MjkzO3N0cm9rZS1saW5lY2FwOnJvdW5kO3N0cm9rZS1saW5lam9pbjpyb3VuZDtzdHJva2UtbWl0ZXJsaW1pdDo0O3N0cm9rZS1kYXNoYXJyYXk6bm9uZTtzdHJva2Utb3BhY2l0eToxIiBpZD0icmVjdDE0OTQtNS0zIiB3aWR0aD0iMS40NjQ2NTc4IiBoZWlnaHQ9IjIuMTczMzYzMiIgeD0iMTIwLjkxMjQxIiB5PSI3OS43OTk0NDYiIHRyYW5zZm9ybT0icm90YXRlKDQ1KSIgaW5rc2NhcGU6dHJhbnNmb3JtLWNlbnRlci15PSIwLjA5NDQ5NDA0OCIvPgogICAgPHJlY3Qgc3R5bGU9Im9wYWNpdHk6MTtmaWxsOiNmZDY1MDA7ZmlsbC1vcGFjaXR5OjE7c3Ryb2tlOm5vbmU7c3Ryb2tlLXdpZHRoOjEuMjYyMjU3MjI7c3Ryb2tlLWxpbmVjYXA6cm91bmQ7c3Ryb2tlLWxpbmVqb2luOnJvdW5kO3N0cm9rZS1taXRlcmxpbWl0OjQ7c3Ryb2tlLWRhc2hhcnJheTpub25lO3N0cm9rZS1vcGFjaXR5OjEiIGlkPSJyZWN0MTQ5NC01LTUiIHdpZHRoPSIxLjc4OTEzNjkiIGhlaWdodD0iMi4yODYxMTkyIiB4PSItNzkuNDM1NzIyIiB5PSIxMjcuODc2OTciIHRyYW5zZm9ybT0ibWF0cml4KDAuNzE4NjA1MzYsLTAuNjk1NDE4MSwwLjcxODYwNTM2LDAuNjk1NDE4MSwwLDApIiBpbmtzY2FwZTp0cmFuc2Zvcm0tY2VudGVyLXg9Ii0wLjk1OTYyMDI3IiBpbmtzY2FwZTp0cmFuc2Zvcm0tY2VudGVyLXk9IjAuODMwOTA5MjQiLz4KICAgIDxjaXJjbGUgc3R5bGU9Im9wYWNpdHk6MTtmaWxsOiNmZDY1MDA7ZmlsbC1vcGFjaXR5OjE7c3Ryb2tlOm5vbmU7c3Ryb2tlLXdpZHRoOjIuNTM4NDYxNDU7c3Ryb2tlLWxpbmVjYXA6cm91bmQ7c3Ryb2tlLWxpbmVqb2luOnJvdW5kO3N0cm9rZS1taXRlcmxpbWl0OjQ7c3Ryb2tlLWRhc2hhcnJheTpub25lO3N0cm9rZS1vcGFjaXR5OjEiIGlkPSJwYXRoMTU0MyIgY3g9IjMxLjE4ODk0IiBjeT0iMTQwLjE4NDUyIiByPSIwLjU4NDY4MTkzIi8+CiAgICA8Y2lyY2xlIHN0eWxlPSJvcGFjaXR5OjE7ZmlsbDojZmQ2NTAwO2ZpbGwtb3BhY2l0eToxO3N0cm9rZTpub25lO3N0cm9rZS13aWR0aDoyLjUzODQ2MTQ1O3N0cm9rZS1saW5lY2FwOnJvdW5kO3N0cm9rZS1saW5lam9pbjpyb3VuZDtzdHJva2UtbWl0ZXJsaW1pdDo0O3N0cm9rZS1kYXNoYXJyYXk6bm9uZTtzdHJva2Utb3BhY2l0eToxIiBpZD0icGF0aDE1NDMtNiIgY3g9IjMyLjg2MzI1OCIgY3k9IjE0MC4xODQ1MiIgcj0iMC41ODQ2ODE5MyIvPgogICAgPGNpcmNsZSBzdHlsZT0ib3BhY2l0eToxO2ZpbGw6I2ZkNjUwMDtmaWxsLW9wYWNpdHk6MTtzdHJva2U6bm9uZTtzdHJva2Utd2lkdGg6Mi41Mzg0NjE0NTtzdHJva2UtbGluZWNhcDpyb3VuZDtzdHJva2UtbGluZWpvaW46cm91bmQ7c3Ryb2tlLW1pdGVybGltaXQ6NDtzdHJva2UtZGFzaGFycmF5Om5vbmU7c3Ryb2tlLW9wYWNpdHk6MSIgaWQ9InBhdGgxNTQzLTIiIGN4PSIzNC41Mzc1NzUiIGN5PSIxNDAuMTg0NTIiIHI9IjAuNTg0NjgxOTMiLz4KICA8L2c+Cjwvc3ZnPg=="
+  }
+}

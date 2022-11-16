@@ -1,0 +1,3 @@
+name: ROCKETMQ
+type: io.camunda:rocket-mq:1
+variables: [ authentication, topic, message ]

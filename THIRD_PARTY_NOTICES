@@ -6,7 +6,7 @@ Do Not Translate or Localize
 This project incorporates components with the licenses under which Camunda received them as listed below.
 
   * com.alibaba:fastjson (Version: 1.2.69_noneautotype, License: Apache-2.0 (URL: https://opensource.org/licenses/Apache-2.0))
-  * com.github.luben:zstd-jni (Version: 1.5.2-2, License: BSD 2-Clause License (URL: no known URL))
+  * com.github.luben:zstd-jni (Version: 1.5.2-2, License: BSD-2-Clause (URL: no known URL))
   * com.google.code.findbugs:jsr305 (Version: 3.0.2, License: Apache-2.0 (URL: https://opensource.org/licenses/Apache-2.0))
   * com.google.code.gson:gson (Version: 2.10, License: Apache-2.0 (URL: https://opensource.org/licenses/Apache-2.0))
   * com.google.guava:failureaccess (Version: 1.0.1, License: Apache-2.0 (URL: https://opensource.org/licenses/Apache-2.0))
